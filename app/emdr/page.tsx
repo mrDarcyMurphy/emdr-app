@@ -1,11 +1,11 @@
 'use client'
 
 import { gsap, Sine } from 'gsap'
-import { useLayoutEffect, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Howl } from 'howler';
+import { Button } from '../../components/Button'
 
 import './page.css'
-
 
 export default function Page() {
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -30,46 +30,17 @@ export default function Page() {
     const light = lightRef.current;
 
     let tl: gsap.core.Timeline | undefined;
-    // if (isAnimating) {
-    //   tl = gsap.timeline({
-    //     repeat: -1,
-    //     yoyo: true,
-    //     onUpdate: () => {
-    //       const lightPos = gsap.getProperty(light, "x");
-    //       console.debug(`🔊 lightPos:`, typeof lightPos, lightPos)
-    //       if (lightPos === 95) {
-    //         rightSound?.play();
-    //       } else if (lightPos === "0vw") {
-    //         leftSound?.play();
-    //       }
-    //     },
-    //   });
-    //   tl.to(light, { x: "95vw", duration: 1, ease: "power2.inOut" });
-    // }
-    // if (isAnimating) {
-    //   tl = gsap.timeline({
-    //     repeat: -1,
-    //     yoyo: true,
-    //     onUpdate: () => {
-    //       const lightPos = gsap.getProperty(light, "left");
-    //       if (lightPos === 100) {
-    //         rightSound?.play();
-    //       } else if (lightPos === 0) {
-    //         leftSound?.play();
-    //       }
-    //     },
-    //   });
-    //   tl.to(light, { left: "100%", duration: 1, ease: "power1.inOut" });
-    // }
     if (isAnimating) {
-
       tl = gsap.timeline({repeat: -1});
       tl
         .to(light, 1, { left: '100%', ease: Sine.easeInOut })
         .call(function() { rightSound?.play() }, [], "-=0.145924")
         .to(light, 1, { left: '0%', ease: Sine.easeInOut })
         .call(function() { leftSound?.play() }, [], "-=0.145924")
+    }
 
+    if (!isAnimating) {
+      gsap.to(light, 0, { left: 0 });
     }
 
     return () => {
@@ -82,9 +53,11 @@ export default function Page() {
 
   return (
     <>
-      <button onClick={toggleAnimation}>
+    <div className='container p-2'>
+      <Button onClick={toggleAnimation}>
         {isAnimating ? "Stop Animation" : "Start Animation"}
-      </button>
+      </Button>
+    </div>
       <div className="light-box">
         <div className="light" ref={lightRef} />
       </div>
