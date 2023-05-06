@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/howler": "^2.2.7",
     "@types/node": "18.16.3",
     "@types/react": "18.2.5",
     "@types/react-dom": "18.2.3",
@@ -16,6 +17,7 @@
     "eslint": "8.39.0",
     "eslint-config-next": "13.4.0",
     "gsap": "^3.11.5",
+    "howler": "^2.2.3",
     "next": "13.4.0",
     "postcss": "8.4.23",
     "react": "18.2.0",

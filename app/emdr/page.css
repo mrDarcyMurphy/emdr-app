@@ -1,0 +1,18 @@
+.light-box {
+  padding: 50vh 0;
+  margin: 0 16px;
+  position: relative;
+}
+
+.light {
+  height: 32px;
+  width: 32px;
+  background:  #9ee6ff;
+  background-image: radial-gradient(circle at 50% 50%, #fff 0%, #9ee6ff 61.8%, #0066b8 85.4%);
+  box-shadow: 0 0 8px 4px #0066b8;
+  border-radius: 100% 100%;
+  position: absolute;
+  margin: -16px 0 0 -16px;
+  left: 0%;
+  top: 50%;
+}
