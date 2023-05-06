@@ -65,9 +65,9 @@ export default function Page() {
 
       tl = gsap.timeline({repeat: -1});
       tl
-        .to('.light', 1, { left: '100%', ease: Sine.easeInOut })
+        .to(light, 1, { left: '100%', ease: Sine.easeInOut })
         .call(function() { rightSound?.play() }, [], "-=0.145924")
-        .to('.light', 1, { left: '0%', ease: Sine.easeInOut })
+        .to(light, 1, { left: '0%', ease: Sine.easeInOut })
         .call(function() { leftSound?.play() }, [], "-=0.145924")
 
     }
