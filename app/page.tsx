@@ -1,8 +1,8 @@
 'use client'
 
-import { gsap, Sine } from 'gsap'
 import { useEffect, useRef, useState } from 'react'
-import { Howl } from 'howler';
+import { gsap, Sine } from 'gsap'
+import { Howl } from 'howler'
 import { Button } from '../components/Button'
 
 import './page.css'
@@ -63,7 +63,7 @@ export default function Page() {
             <div className='inline-flex items-center gap-2'>
               <input
                 type="range"
-                min="0.1"
+                min="0.45"
                 max="2"
                 step="0.05"
                 value={speed}
