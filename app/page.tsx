@@ -54,28 +54,28 @@ export default function Page() {
 
   return (
     <>
-    <div className='container p-2'>
-      <div className='flex flex-row content-center gap-8'>
-        <Button onClick={toggleAnimation}>
-          {isAnimating ? "Stop Animation" : "Start Animation"}
-        </Button>
-        <div className='inline-flex items-center gap-2'>
-          <input
-            type="range"
-            min="0.1"
-            max="2"
-            step="0.05"
-            value={speed}
-            disabled={isAnimating}
-            onChange={(event) => setSpeed(parseFloat(event.target.value))}
-          />
-
-
+      <div className='flex flex-col flex-nowrap h-full'>
+        <div className='container p-2'>
+          <div className='flex flex-row content-center gap-8'>
+            <Button onClick={toggleAnimation}>
+              {isAnimating ? "Stop Animation" : "Start Animation"}
+            </Button>
+            <div className='inline-flex items-center gap-2'>
+              <input
+                type="range"
+                min="0.1"
+                max="2"
+                step="0.05"
+                value={speed}
+                disabled={isAnimating}
+                onChange={(event) => setSpeed(parseFloat(event.target.value))}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-      <div className="light-box">
-        <div className="light" ref={lightRef} />
+        <div className="relative flex-grow overflow-hidden">
+          <div className="light" ref={lightRef} />
+        </div>
       </div>
     </>
   )
