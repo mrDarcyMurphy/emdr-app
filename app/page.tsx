@@ -1,18 +1,21 @@
-'use client'
+"use client";
 
-import { useEffect, useRef, useState } from 'react'
-import { gsap, Sine } from 'gsap'
-import { Howl } from 'howler'
-import { Button } from '../components/Button'
+import { useEffect, useRef, useState } from "react";
+import { gsap, Sine } from "gsap";
+import { Howl } from "howler";
+import { Button } from "../components/Button";
 
-import './page.css'
+import "./page.css";
 
 export default function Page() {
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [leftSound, setLeftSound] = useState<Howl | null>(null);
   const [rightSound, setRightSound] = useState<Howl | null>(null);
-  const [speed, setSpeed] = useState<number>(1);
+  const [cyclesPerMinute, setCyclesPerMinute] = useState<number>(30);
   const lightRef = useRef<HTMLDivElement>(null);
+
+  // Convert cycles per minute to speed (duration in seconds for one-way travel)
+  const speed = 60 / (cyclesPerMinute * 2);
 
   const toggleAnimation = (): void => {
     setIsAnimating(!isAnimating);
@@ -32,12 +35,24 @@ export default function Page() {
 
     let tl: gsap.core.Timeline | undefined;
     if (isAnimating) {
-      tl = gsap.timeline({repeat: -1});
+      tl = gsap.timeline({ repeat: -1 });
       tl
-        .to(light, speed, { left: '100%', ease: Sine.easeInOut })
-        .call(function() { rightSound?.play() }, [], "-=0.145924")
-        .to(light, speed, { left: '0%', ease: Sine.easeInOut })
-        .call(function() { leftSound?.play() }, [], "-=0.145924")
+        .to(light, speed, { left: "100%", ease: Sine.easeInOut })
+        .call(
+          function () {
+            rightSound?.play();
+          },
+          [],
+          "-=0.145924",
+        )
+        .to(light, speed, { left: "0%", ease: Sine.easeInOut })
+        .call(
+          function () {
+            leftSound?.play();
+          },
+          [],
+          "-=0.145924",
+        );
     }
 
     if (!isAnimating) {
@@ -51,25 +66,40 @@ export default function Page() {
     };
   }, [isAnimating, leftSound, rightSound, speed]);
 
-
   return (
     <>
-      <div className='flex flex-col flex-nowrap h-full'>
-        <div className='container p-2'>
-          <div className='flex flex-row content-center gap-8'>
+      <div className="flex flex-col flex-nowrap h-full">
+        <div className="container p-2">
+          <div className="flex flex-row content-center gap-8">
             <Button onClick={toggleAnimation}>
               {isAnimating ? "Stop Animation" : "Start Animation"}
             </Button>
-            <div className='inline-flex items-center gap-2'>
+            <div className="inline-flex items-center gap-2">
               <input
                 type="range"
-                min="0.45"
-                max="2"
-                step="0.05"
-                value={speed}
+                min="15"
+                max="67"
+                step="1"
+                value={cyclesPerMinute}
                 disabled={isAnimating}
-                onChange={(event) => setSpeed(parseFloat(event.target.value))}
+                onChange={(event) =>
+                  setCyclesPerMinute(parseInt(event.target.value))}
               />
+              <input
+                type="number"
+                min="15"
+                max="67"
+                value={cyclesPerMinute}
+                disabled={isAnimating}
+                onChange={(event) => {
+                  const value = parseInt(event.target.value);
+                  if (!isNaN(value) && value >= 15 && value <= 67) {
+                    setCyclesPerMinute(value);
+                  }
+                }}
+                className="w-16 px-2 py-1 border border-gray-300 rounded text-center dark:border-gray-600 dark:bg-gray-700"
+              />
+              <span className="text-sm text-gray-600">cycles/min</span>
             </div>
           </div>
         </div>
@@ -78,6 +108,5 @@ export default function Page() {
         </div>
       </div>
     </>
-  )
-
+  );
 }
