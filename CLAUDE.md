@@ -12,15 +12,43 @@ This is an EMDR therapy application built with Next.js 13 (App Router) that impl
 # Start development server (port 3000)
 npm run dev
 
-# Build for production
+# Build for production (static export)
 npm run build
 
-# Start production server
+# Build and export static site (alias for build)
+npm run export
+
+# Start production server (not needed for static deployment)
 npm start
 
 # Run linting
 npm run lint
 ```
+
+## Deployment
+
+This app is configured for static site deployment to GitHub Pages.
+
+### Automatic Deployment
+
+The app automatically deploys to GitHub Pages when you push to the `main` branch via GitHub Actions workflow (`.github/workflows/deploy.yml`).
+
+### GitHub Pages Setup
+
+1. Go to your repository Settings > Pages
+2. Set Source to "GitHub Actions"
+3. Push to the `main` branch to trigger deployment
+4. Your site will be available at `https://<username>.github.io/<repo-name>/`
+
+### Manual Build
+
+To build the static site locally:
+
+```bash
+npm run build
+```
+
+The static files will be generated in the `out/` directory.
 
 ## Architecture
 
@@ -63,6 +91,7 @@ The project uses Tailwind CSS for most styling. The `.light` class in `app/page.
 ## Technical Details
 
 - **Next.js 13 App Router**: Uses `'use client'` directive for client-side interactivity
+- **Static Export**: Configured with `output: 'export'` in `next.config.js` for static site generation
 - **TypeScript**: Strict mode enabled
 - **Client-side only**: All animation/audio logic requires browser APIs
 - **GSAP timeline cleanup**: Properly kills timelines in useEffect cleanup to prevent memory leaks
